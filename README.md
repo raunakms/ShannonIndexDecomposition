@@ -1,0 +1,2 @@
+# ShannonIndexDecomposition
+Shannon Index Decomposition
