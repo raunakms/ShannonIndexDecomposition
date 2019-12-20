@@ -1,27 +1,3 @@
-### FUNCTION: get.Hoverall() : COMPUTE OVERALL SHANNON INDEX [H_t] ---
-get.Hoverall <- function(dat){
-    # H_a = - SUM_i [ (n_i / n) * ln(n_i / n) ]
-
-    # GET GROUP AND ITEM TOTAL ---
-    total_g <- rowSums(dat)
-    total_i <- colSums(dat)
-    total_t <- sum(total_g)
-
-    list.h_a <- list()
-    for(i in 1:length(total_i)){
-        n_i <- total_i[i]
-        n <- total_t
-        k <- n_i/n
-
-        list.h_a[[i]] <- k * log(k)
-    }
-
-    # GET TOTAL ---
-    h_a <- -sum(unlist(list.h_a))
-
-    return(h_a)
-}
-
 ### FUNCTION: get.Hwithin() ---
 get.Hwithin <- function(dat){
     # H_w = - SUM_g [ (n_g/n) * (SUM_i [ (n_gi/n_g) * ln(n_gi/n_g)] ) ]
@@ -93,9 +69,6 @@ get.Hbetween <- function(dat){
 
 ### FUNCTION:get.ShannonIndexDecomposition() ---
 get.ShannonIndexDecomposition <- function(dat){
-    # OVERALL SHANNON INDEX ---
-    H_overall <- get.Hoverall(dat)
-
     # WITHIN GROUP SHANNON INDEX ---
     H_withinGroup <- get.Hwithin(dat)
 
@@ -103,13 +76,12 @@ get.ShannonIndexDecomposition <- function(dat){
     H_betweenGroup <- get.Hbetween(dat)
 
     # SHANNON INDEX DECOMPOSITION ---
-    H_total <- - H_withinGroup + H_betweenGroup
+    H_overall <- - H_withinGroup + H_betweenGroup
 
     # OUTPUT ---
-    list.output <- list(H_overall=H_overall, 
-                        H_withinGroup=H_withinGroup, 
+    list.output <- list(H_withinGroup=H_withinGroup, 
                         H_betweenGroup=H_betweenGroup, 
-                        H_total=H_total)
+                        H_overall=H_overall)
 
     return(list.output)
 }
