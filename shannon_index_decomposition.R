@@ -41,20 +41,24 @@ get.Hwithin <- function(dat){
             n_gi <- dat[g,i]
             k <- (n_gi/n_g)
 
-            list.k[[i]] <- k * log(k)
+            if(n_gi != 0){
+                list.k[[i]] <- k * log(k)
+            }else{
+                list.k[[i]] <- k
+            }
         }
 
         list.j[[g]] <- (n_g/n) * sum(unlist(list.k))
     }
 
-    h_w <- -sum(unlist(list.j))
+    h_w <- - sum(unlist(list.j))
 
     return(h_w)
 }
 
 ### FUNCTION: get.Hbetween() ---
 get.Hbetween <- function(dat){
-    # H_b = - SUM_g [ (n_g/n) * (SUM_i [(n_gi/n_g) * ln((n_gi/n_g)/(n_i/n))] )]
+    # H_b = SUM_g [ (n_g/n) * (SUM_i [(n_gi/n_g) * ln((n_gi/n_g)/(n_i/n))] )]
 
     # GET GROUP AND ITEM TOTAL ---
     total_g <- rowSums(dat)
@@ -72,13 +76,17 @@ get.Hbetween <- function(dat){
             n_i <- total_i[i]
             k <- (n_gi/n_g)
 
-            list.k[[i]] <- k * log(k / (n_i/n) )
+            if(n_gi != 0){
+                list.k[[i]] <- k * log(k / (n_i/n) )
+            }else{
+                list.k[[i]] <- k
+            }
         }
 
         list.b[[g]] <- (n_g/n) * sum(unlist(list.k))
     }
 
-    h_b <- - sum(unlist(list.b))
+    h_b <- sum(unlist(list.b))
 
     return(h_b)
 }
@@ -95,7 +103,7 @@ get.ShannonIndexDecomposition <- function(dat){
     H_betweenGroup <- get.Hbetween(dat)
 
     # SHANNON INDEX DECOMPOSITION ---
-    H_total <- H_withinGroup + H_betweenGroup
+    H_total <- - H_withinGroup + H_betweenGroup
 
     # OUTPUT ---
     list.output <- list(H_overall=H_overall, 
