@@ -3,6 +3,7 @@ This script is useful for Shannon Entropy Index Decomposition implemented in R. 
 
 ## Reference
 > Akay *et al*. *Ethnic diversity and well-being.*  J Popul Econ. (2017) 30(1):265–306. [DOI: 10.1007/s00148-016-0618-8](https://doi.org/10.1007/s00148-016-0618-8)
+
 > Josef Novotný. *On the measurement of regional inequality: does spatial dimension of income inequality matter?* Ann Reg Sci (2007) 41:563–580. [DOI:10.1007/s00168-007-0113-y](https://doi.org/10.1007/s00168-007-0113-y)
 <br/><br/>
 
